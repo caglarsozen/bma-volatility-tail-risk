@@ -28,7 +28,7 @@ run_refit_sensitivity <- function(tickers=default_config()$tickers,outdir="resul
     dest<-file.path(outdir,ticker);dir.create(dest,recursive=TRUE,showWarnings=FALSE)
     if(file.exists(file.path(dest,"complete.rds"))){message("Complete refit5 cache: ",ticker);next}
     x<-read_prices(file.path("data/raw",paste0(ticker,".csv")),ticker,cfg);hb<-har_bank(x,cfg)
-    setwd(file.path(root,dest))
+    setwd(dest)
     gb<-tryCatch(garch_bank(x,cfg,models=c(GARCH="sGARCH",GJR="gjrGARCH")),finally=setwd(root))
     bank<-rbind(gb,hb);ans<-evaluate_revision_pool(bank,cfg)
     saveRDS(ans,file.path(dest,"complete.rds"));write.csv(bank,file.path(dest,"forecast_bank.csv"),row.names=FALSE)

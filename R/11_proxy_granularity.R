@@ -1,4 +1,4 @@
-# An analytic diagnostic, not a new forecasting algorithm. See docs/proof.
+# The study archive contains the derivation for this proxy-granularity diagnostic.
 proxy_granularity_constants <- function(d) {
   a<-d/2;logc<-digamma(a)-log(a)+trigamma(a)/2;c<-exp(logc)
   integrand<-function(y) {f<-dnorm(y);q<-f/3+2*dnorm(y,sd=sqrt(c))/3;f*(dnorm(y,log=TRUE)-log(pmax(q,.Machine$double.xmin)))}

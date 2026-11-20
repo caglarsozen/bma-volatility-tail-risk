@@ -36,10 +36,10 @@ adjusted closing price in `adjusted`. The code selects observations from
 and the evaluation period begins in 2022. The historical realized-kernel
 case uses the `spyreal` example distributed with `rugarch`.
 
-`Rscript DOWNLOAD_DATA.R` retrieves a new Yahoo Finance data vintage where
-provider access permits. The script preserves existing snapshots. Use the
-frozen snapshots from the study archive for the recorded analysis. Fresh
-downloads and optimizer versions can change fitted forecasts.
+`Rscript DOWNLOAD_DATA.R` retrieves a new Yahoo Finance data vintage into an
+empty `data/raw/` directory where provider access permits. Use the frozen
+snapshots from the study archive for the recorded analysis. Fresh downloads
+and optimizer versions can change fitted forecasts.
 
 ## Full analysis
 
@@ -67,13 +67,24 @@ bma_revision("full")
 
 ## Verify existing results
 
-Run `Rscript RUN_BMA_REVISION.R verify` from a completed run directory
-containing the price snapshots and forecast outputs. For a study archive,
-use the verification scripts bundled with that archive.
+Run the R verification from a completed run directory containing the price
+snapshots and forecast outputs.
 
-The independent Python audits in `tests/` use NumPy, pandas and SciPy.
-`AUDIT_EXPORT.R` exports per-date losses and outcomes for
-`tests/independent_audit.py` when run alongside the saved forecasts.
+~~~sh
+Rscript RUN_BMA_REVISION.R verify
+~~~
+
+The optional independent checks use NumPy, pandas and SciPy. Run them from
+the same directory after exporting the daily losses.
+
+~~~sh
+Rscript AUDIT_EXPORT.R
+python3 tests/independent_audit.py
+python3 tests/independent_revision_audit.py
+python3 tests/independent_scale_audit.py
+~~~
+
+For a study archive, use its bundled verification scripts.
 
 | Path | Purpose |
 |---|---|
@@ -81,8 +92,6 @@ The independent Python audits in `tests/` use NumPy, pandas and SciPy.
 | `tests/` | Numerical and forecast chronology checks |
 | `DOWNLOAD_DATA.R` | Retrieve a separate market-data vintage |
 | `RUN_BMA_REVISION.R` | Run, resume or verify the full study |
-
-For a Turkish quick-start guide, see [R çalıştırma yönergesi](docs/RUN_TR.md).
 
 ## License
 

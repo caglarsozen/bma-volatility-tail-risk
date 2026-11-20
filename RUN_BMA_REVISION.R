@@ -56,8 +56,9 @@ bma_revision <- function(mode = "full", run_directory = NULL) {
     if (file.exists(run_directory)) stop("Full mode requires a new output directory.")
     dir.create(run_directory, recursive = TRUE)
     dir.create(file.path(run_directory, "data"))
-    stopifnot(all(file.copy(c("00_RUN.R", "RUN_BMA_REVISION.R", "R", "tests"),
-      run_directory, recursive = TRUE)))
+    run_files <- c("00_RUN.R", "RUN_BMA_REVISION.R", "AUDIT_EXPORT.R",
+      "INSTALL_PACKAGES.R", "DOWNLOAD_DATA.R", "README.md", "LICENSE", "R", "tests")
+    stopifnot(all(file.copy(run_files, run_directory, recursive = TRUE)))
     stopifnot(file.copy("data/raw", file.path(run_directory, "data"), recursive = TRUE))
     saveRDS(revision_manifest(run_directory), file.path(run_directory, "revision_inputs.rds"))
   } else {

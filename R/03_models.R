@@ -3,7 +3,7 @@ default_config <- function() list(
   start=as.Date("2018-01-01"),end_exclusive=as.Date("2026-06-30"),
   validation_start=as.Date("2021-01-01"),test_start=as.Date("2022-01-01"),
   refit_every=20L,min_train=500L,df_har=8,log_floor=1e-8,
-  calendar="native",seed=20261113L,version="23.0-research")
+  calendar="native",seed=20261113L)
 read_prices <- function(path,ticker,config) {
   x<-read.csv(path,stringsAsFactors=FALSE); x$date<-as.Date(x$date)
   cols<-c("date","open","high","low","close","adjusted","volume")

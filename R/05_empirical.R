@@ -118,7 +118,7 @@ run_empirical <- function(config=default_config(), volatility_builder=garch_bank
     quality[[ticker]]<-data.frame(ticker=ticker,first=x$date[1],last=tail(x$date,1),n=nrow(x),
       mean_return=mean(x$ret),max_abs_return=max(abs(x$ret)),zero_returns=sum(x$ret==0),
       log_floor_count=sum(x$rv<config$log_floor),calendar="native",validation_n=sum(x$date>=config$validation_start&x$date<config$test_start),
-      evaluation_n=sum(x$date>=config$test_start),source_vintage="new_download_2026_11_13_not_original")
+      evaluation_n=sum(x$date>=config$test_start),source_vintage="local_snapshot")
   }
   pp<-do.call(rbind,perf);cc<-do.call(rbind,comps)
   cc$p_holm_global<-p.adjust(cc$p_two,"holm")

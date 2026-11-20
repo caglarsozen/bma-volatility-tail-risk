@@ -16,6 +16,7 @@ run_garch_tests <- function() {
     pass=c(max(abs(a$sigma2[ix]-b$sigma2[ix]))<1e-9,
            max(abs(a$df[ix]-b$df[ix]))<1e-9,
            max(abs(t_logpdf(a$ret,a$sigma2,a$df)-log(rugarch::ddist("std",a$ret,mu=0,sigma=sqrt(a$sigma2),shape=a$df))))<1e-10))
+  dir.create("results/audit",recursive=TRUE,showWarnings=FALSE)
   write.csv(checks,"results/audit/garch_checks.csv",row.names=FALSE)
   assert(all(checks$pass),"GARCH integration audit failed")
   message("3 GARCH integration checks PASS")
